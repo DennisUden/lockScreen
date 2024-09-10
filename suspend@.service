@@ -1,0 +1,16 @@
+# place in /etc/systemd/system as suspend@.service
+# sudo systemctl enable --now suspend@<user>.service
+# sudo is needed because users do not have direct access to sleep.target, only system does
+[Unit]
+Description=User suspend actions
+Before=sleep.target
+
+[Service]
+User=%I
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/i3lock
+
+[Install]
+WantedBy=sleep.target
+
